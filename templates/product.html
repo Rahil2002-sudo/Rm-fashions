@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html>{% extends "base.html" %}
+
+{% block content %}
+<div class="product-detail">
+    <div class="product-gallery">
+        <div class="main-image">
+            <img src="{{ url_for('static', filename='images/' + product.image) }}"
+                 alt="{{ product.name }}">
+        </div>
+        <div class="thumbnails">
+            <img src="{{ url_for('static', filename='images/' + product.image) }}" alt="Thumbnail 1">
+            <img src="{{ url_for('static', filename='images/product2.jpg') }}" alt="Thumbnail 2">
+            <img src="{{ url_for('static', filename='images/product3.jpg') }}" alt="Thumbnail 3">
+        </div>
+    </div>
+
+    <div class="product-info">
+        <h1>{{ product.name }}</h1>
+        <div class="price">{{ CURRENCY }}{{ product.price }}</div>
+        <div class="product-meta">
+            <div><span>Material:</span> {{ product.material }}</div>
+            <div><span>Color:</span> {{ product.color }}</div>
+            <div><span>Availability:</span>
+                {% if product.stock > 0 %}
+                    In Stock ({{ product.stock }} items)
+                {% else %}
+                    Out of Stock
+                {% endif %}
+            </div>
+        </div>
+
+        <p class="description">{{ product.description }}</p>
+
+        <form action="{{ url_for('add_to_cart') }}" method="POST" class="product-form">
+            <input type="hidden" name="product_id" value="{{ product.id }}">
+
+            <div class="form-group">
+                <label>Size:</label>
+                <div class="size-selector">
+                    <input type="radio" name="size" id="size-s" value="S" checked>
+                    <label for="size-s">S</label>
+                    <input type="radio" name="size" id="size-m" value="M">
+                    <label for="size-m">M</label>
+                    <input type="radio" name="size" id="size-l" value="L">
+                    <label for="size-l">L</label>
+                    <input type="radio" name="size" id="size-xl" value="XL">
+                    <label for="size-xl">XL</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Color:</label>
+                <div class="color-selector">
+                    <input type="radio" name="color" id="color-red" value="Red" checked>
+                    <label for="color-red" style="background-color: #ff0000;"></label>
+                    <input type="radio" name="color" id="color-blue" value="Blue">
+                    <label for="color-blue" style="background-color: #0000ff;"></label>
+                    <input type="radio" name="color" id="color-black" value="Black">
+                    <label for="color-black" style="background-color: #000000;"></label>
+                    <input type="radio" name="color" id="color-white" value="White">
+                    <label for="color-white" style="background-color: #ffffff; border: 1px solid #ccc;"></label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="quantity">Quantity:</label>
+                <div class="quantity-selector">
+                    <button type="button" class="quantity-btn minus">-</button>
+                    <input type="number" id="quantity" name="quantity" value="1" min="1" max="{{ product.stock }}">
+                    <button type="button" class="quantity-btn plus">+</button>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-add-to-cart">
+                <i class="fas fa-shopping-cart"></i> Add to Cart
+            </button>
+        </form>
+
+        <div class="product-details-tabs">
+            <div class="tabs">
+                <button class="tab active">Description</button>
+                <button class="tab">Size Guide</button>
+                <button class="tab">Shipping & Returns</button>
+            </div>
+            <div class="tab-content">
+                <p>{{ product.description }}</p>
+                <p>Our garments are made with premium materials and attention to detail.
+                   Each piece is carefully crafted to ensure comfort, durability, and style.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="related-products">
+    <h2>You May Also Like</h2>
+    <div class="products-grid">
+        <div class="product-card">
+            <img src="{{ url_for('static', filename='images/related1.jpg') }}" alt="Related Product">
+            <h3>Casual Summer Shirt</h3>
+            <div class="price">$39.99</div>
+        </div>
+        <div class="product-card">
+            <img src="{{ url_for('static', filename='images/related2.jpg') }}" alt="Related Product">
+            <h3>Designer Denim Jacket</h3>
+            <div class="price">$89.99</div>
+        </div>
+        <div class="product-card">
+            <img src="{{ url_for('static', filename='images/related3.jpg') }}" alt="Related Product">
+            <h3>Elegant Evening Dress</h3>
+            <div class="price">$129.99</div>
+        </div>
+    </div>
+</section>
+{% endblock %}

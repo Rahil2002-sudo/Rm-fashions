@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html>{% extends "base.html" %}
+
+{% block content %}
+<section class="hero-banner">
+    <div class="hero-content">
+        <h2>Summer Collection 2023</h2>
+        <p>Discover our new arrivals for the season</p>
+        <a href="#" class="btn">Shop Now</a>
+    </div>
+</section>
+
+<section class="featured-products">
+    <h2>Featured Garments</h2>
+    <div class="products-grid">
+        {% for product in products %}
+        <div class="product-card">
+            <div class="product-image">
+                <img src="{{ url_for('static', filename='images/' + product.image) }}"
+                     alt="{{ product.name }}">
+                <div class="quick-view">Quick View</div>
+            </div>
+            <div class="product-info">
+                <h3>{{ product.name }}</h3>
+                <div class="price">{{ CURRENCY }}{{ product.price }}</div>
+                <div class="product-actions">
+                    <a href="{{ url_for('product_detail', id=product.id) }}" class="btn-details">View Details</a>
+                    <button class="btn-cart"><i class="fas fa-shopping-cart"></i></button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="categories">
+    <h2>Shop by Category</h2>
+    <div class="category-grid">
+        <div class="category-card">
+            <img src="{{ url_for('static', filename='images/mens-category.jpg') }}" alt="Men's Clothing">
+            <div class="category-title">Men's</div>
+        </div>
+        <div class="category-card">
+            <img src="{{ url_for('static', filename='images/womens-category.jpg') }}" alt="Women's Clothing">
+            <div class="category-title">Women's</div>
+        </div>
+        <div class="category-card">
+            <img src="{{ url_for('static', filename='images/kids-category.jpg') }}" alt="Kids' Clothing">
+            <div class="category-title">Kids'</div>
+        </div>
+        <div class="category-card">
+            <img src="{{ url_for('static', filename='images/accessories-category.jpg') }}" alt="Accessories">
+            <div class="category-title">Accessories</div>
+        </div>
+    </div>
+</section>
+{% endblock %}
